@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#002D62">
+  <title>Portal Katalog Suku Bunga Consumer Banking | Bank Mandiri</title>
+  <style>
+    :root {
+      --mandiri-blue: #002D62;
+      --mandiri-primary: #003876;
+      --mandiri-secondary: #005696;
+      --mandiri-accent: #0077B6;
+      --mandiri-gold: #FFC72C;
+      --mandiri-gold-deep: #FDB813;
+      --mandiri-gold-hover: #e5a408;
+      --bg-light: #F4F7FA;
+      --card-bg: #FFFFFF;
+      --text-dark: #0F172A;
+      --text-muted: #64748B;
+      --border-color: #E2E8F0;
+      --drawer-width: 420px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      touch-action: manipulation;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* HEADER & BRANDING */
+    header {
+      background: linear-gradient(135deg, var(--mandiri-blue) 0%, var(--mandiri-primary) 100%);
+      color: #ffffff;
+      padding: 14px 24px;
+      box-shadow: 0 4px 18px rgba(0, 45, 98, 0.28);
+      position: sticky;
+      top: 0;
+      z-index: 400;
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+
+    .svg-logo {
+      display: inline-flex;
+      align-items: center;
+      height: 32px;
+    }
+
+    .header-titles {
+      text-align: right;
+      flex: 1;
+    }
+
+    .header-titles h1 {
+      font-size: 1.18rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    .header-titles h1 span {
+      color: var(--mandiri-gold);
+    }
+
+    .header-titles p {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .btn-toc-toggle {
+      background: var(--mandiri-gold);
+      color: var(--mandiri-blue);
+      border: none;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 3px 10px rgba(255, 199, 44, 0.38);
+      transition: all 0.2s ease;
+      user-select: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      -webkit-appearance: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-toc-toggle:hover {
+      background: var(--mandiri-gold-deep);
+      transform: translateY(-1px);
+      box-shadow: 0 5px 14px rgba(255, 199, 44, 0.5);
+    }
+
+    /* MAIN CONTAINER */
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 16px auto;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* QUICK HORIZONTAL NAV TABS (1 - 11) */
+    .quick-tabs-container {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 8px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--mandiri-gold) transparent;
+    }
+
+    .quick-tabs-container::-webkit-scrollbar {
+      height: 5px;
+    }
+    .quick-tabs-container::-webkit-scrollbar-thumb {
+      background: var(--mandiri-gold);
+      border-radius: 4px;
+    }
+
+    .quick-tab-btn {
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      color: var(--mandiri-blue);
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      -webkit-appearance: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .quick-tab-btn:hover {
+      background: #e2e8f0;
+      color: var(--mandiri-primary);
+    }
+
+    .quick-tab-btn.active {
+      background: var(--mandiri-blue);
+      color: #ffffff;
+      border-color: var(--mandiri-blue);
+    }
+
+    .quick-tab-btn.active .tab-badge {
+      background: var(--mandiri-gold);
+      color: var(--mandiri-blue);
+    }
+
+    .tab-badge {
+      background: #cbd5e1;
+      color: #0f172a;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      transition: all 0.2s ease;
+    }
+
+    /* VIEWER CARD */
+    .viewer-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 6px 24px rgba(0, 45, 98, 0.08);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .viewer-header {
+      padding: 14px 18px;
+      background: #ffffff;
+      border-bottom: 2px solid #edf2f7;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .viewer-title-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .viewer-index-badge {
+      background: var(--mandiri-blue);
+      color: #ffffff;
+      font-size: 0.92rem;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border-left: 4px solid var(--mandiri-gold);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .viewer-text-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .viewer-text-content .group-tag {
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--mandiri-secondary);
+      letter-spacing: 0.5px;
+    }
+
+    .viewer-title-info h2 {
+      font-size: 0.95rem;
+      color: var(--mandiri-dark);
+      line-height: 1.4;
+      font-weight: 700;
+    }
+
+    .viewer-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-action {
+      background: #0284c7;
+      color: #ffffff;
+      border: 1px solid #0284c7;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-action:hover {
+      background: #0369a1;
+      border-color: #0369a1;
+      transform: translateY(-1px);
+    }
+
+    /* IFRAME EMBED CONTAINER */
+    .viewer-frame-container {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+      min-height: 560px;
+      background: #0f172a;
+    }
+
+    .viewer-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background: #ffffff;
+    }
+
+    .frame-loader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-top-color: var(--mandiri-gold);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* COLLAPSIBLE TOC DRAWER */
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 23, 55, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .toc-drawer {
+      position: fixed;
+      top: 0;
+      right: calc(-1 * var(--drawer-width));
+      width: var(--drawer-width);
+      max-width: 92vw;
+      height: 100vh;
+      background: #ffffff;
+      box-shadow: -6px 0 25px rgba(0, 0, 0, 0.18);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .toc-drawer.active {
+      right: 0;
+    }
+
+    .drawer-header {
+      padding: 18px 20px;
+      background: linear-gradient(135deg, var(--mandiri-blue), var(--mandiri-primary));
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--mandiri-gold);
+    }
+
+    .drawer-header h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-close-drawer {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: #ffffff;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-appearance: none;
+    }
+
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drawer-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--mandiri-blue);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .drawer-item:hover, .drawer-item:active {
+      background: #eef5ff;
+      border-left-color: var(--mandiri-gold);
+      transform: translateX(4px);
+    }
+
+    .drawer-item.active {
+      background: #e0f2fe;
+      border-color: #0284c7;
+      border-left: 4px solid var(--mandiri-gold);
+    }
+
+    .drawer-badge {
+      background: var(--mandiri-blue);
+      color: #ffffff;
+      font-weight: 800;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .drawer-item.active .drawer-badge {
+      background: var(--mandiri-gold);
+      color: var(--mandiri-blue);
+    }
+
+    .drawer-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .drawer-group-badge {
+      align-self: flex-start;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid #fde68a;
+    }
+
+    .drawer-text {
+      font-size: 0.84rem;
+      color: var(--text-dark);
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--mandiri-deep);
+      color: #ffffff;
+      padding: 18px 24px;
+      margin-top: auto;
+      border-top: 4px solid var(--mandiri-gold);
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logos {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-text {
+      font-size: 0.82rem;
+      color: #94a3b8;
+    }
+
+    /* RESPONSIVE LAYOUT */
+    @media (max-width: 900px) {
+      .header-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+      .header-titles {
+        text-align: left;
+      }
+      .header-titles h1 {
+        font-size: 1.05rem;
+      }
+      .header-top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .viewer-frame-container {
+        height: 70vh;
+        min-height: 440px;
+      }
+      .viewer-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .viewer-actions {
+        justify-content: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-container">
+      <div class="header-top-row">
+        <div class="brand-group">
+          <!-- Logo Danantara Indonesia -->
+          <div class="svg-logo" title="Danantara Indonesia">
+            <svg viewBox="0 0 200 40" height="28" fill="none">
+              <path d="M5 20C12 8 26 8 33 20C26 32 12 32 5 20Z" fill="#E62129"/>
+              <path d="M12 20C17 12 26 12 31 20C26 28 17 28 12 20Z" fill="#ffffff"/>
+              <text x="42" y="19" fill="#ffffff" font-size="14" font-weight="900">DANANTARA</text>
+              <text x="42" y="32" fill="#cbd5e1" font-size="11" font-weight="700" letter-spacing="1.5">INDONESIA</text>
+            </svg>
+          </div>
+          <!-- Logo Bank Mandiri -->
+          <div class="svg-logo" title="Bank Mandiri">
+            <svg viewBox="0 0 130 35" height="30" fill="none">
+              <text x="0" y="24" fill="#ffffff" font-size="22" font-weight="900">mandırı</text>
+              <path d="M78 5C90 1 106 10 114 16C104 15 92 10 78 5Z" fill="#F89C1E"/>
+              <path d="M84 9C98 5 116 16 125 24C112 22 98 16 84 9Z" fill="#FFC72C"/>
+            </svg>
+          </div>
+        </div>
+
+        <div>
+          <button type="button" class="btn-toc-toggle" id="btnOpenTOC">
+            <span>📑</span> Daftar Suku Bunga (TOC)
+          </button>
+        </div>
+      </div>
+
+      <div class="header-titles">
+        <h1>Portal Katalog Suku Bunga <span>Consumer Banking</span></h1>
+        <p>Periode Agustus s.d. September 2026</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- COLLAPSIBLE TOC DRAWER -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="toc-drawer" id="tocDrawer">
+    <div class="drawer-header">
+      <h3>📑 Daftar Menu Suku Bunga</h3>
+      <button type="button" class="btn-close-drawer" id="btnCloseTOC">&times;</button>
+    </div>
+    <div class="drawer-body" id="drawerList"></div>
+  </aside>
+
+  <!-- MAIN VIEWPORT -->
+  <main>
+    <!-- QUICK HORIZONTAL TABS (1 - 11) -->
+    <nav class="quick-tabs-container" id="quickTabsBar"></nav>
+
+    <!-- DOCUMENT VIEWER CARD -->
+    <section class="viewer-card">
+      <div class="viewer-header">
+        <div class="viewer-title-info">
+          <div class="viewer-index-badge" id="viewBadge">Poin 1</div>
+          <div class="viewer-text-content">
+            <span class="group-tag" id="viewGroupTag">Consumer Loans</span>
+            <h2 id="viewTitle">Memuat Dokumen...</h2>
+          </div>
+        </div>
+        <div class="viewer-actions">
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn-action" id="btnDownload">
+            📥 Buka di Tab Baru / Download
+          </a>
+        </div>
+      </div>
+
+      <div class="viewer-frame-container">
+        <div class="frame-loader" id="frameLoader">
+          <div class="spinner"></div>
+          <span>Memuat Dokumen Suku Bunga Mandiri...</span>
+        </div>
+        <iframe src="" class="viewer-iframe" id="docIframe" allow="autoplay"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logos">
+        <!-- Logo Kopra by Mandiri -->
+        <div class="svg-logo" title="Kopra by Mandiri">
+          <svg viewBox="0 0 95 35" height="26" fill="none">
+            <path d="M6 10L9 6L12 10L15 6L18 10L15 13H9L6 10Z" fill="#FFC72C"/>
+            <text x="0" y="24" fill="#ffffff" font-size="18" font-weight="800">kōpra</text>
+          </svg>
+        </div>
+        <!-- Logo Livin' by Mandiri -->
+        <div class="svg-logo" title="Livin' by Mandiri">
+          <svg viewBox="0 0 85 35" height="26" fill="none">
+            <text x="0" y="24" fill="#ffffff" font-size="20" font-weight="900" font-style="italic">livin<tspan fill="#FFC72C">'</tspan></text>
+          </svg>
+        </div>
+      </div>
+      <div class="footer-text">
+        <p><strong>PT Bank Mandiri (Persero) Tbk.</strong> Consumer Loans Group. Berizin dan diawasi oleh OJK & Lembaga Penjamin Simpanan (LPS).</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT ENGINE -->
+  <script>
+    // DATA 11 PROGRAM SUKU BUNGA TERHUBUNG EMBED PREVIEW GDRIVE
+    const rateItems = [
+      {
+        id: 1,
+        icon: "🏠",
+        group: "KPR & Multiguna",
+        title: "Suku Bunga KPR dan Multiguna (Agustus-September 2026)",
+        previewUrl: "https://drive.google.com/file/d/1VSll97-Co6ASOk_E2HZ9GjcOlCa0DCAC/preview",
+        viewUrl: "https://drive.google.com/file/d/1VSll97-Co6ASOk_E2HZ9GjcOlCa0DCAC/view?usp=sharing"
+      },
+      {
+        id: 2,
+        icon: "📱",
+        group: "Livin' Digital",
+        title: "Suku Bunga Livin' KPR",
+        previewUrl: "https://drive.google.com/file/d/1lFZXtdPP7lTXl-JXh5eG6EhxSGbJbs_3/preview",
+        viewUrl: "https://drive.google.com/file/d/1lFZXtdPP7lTXl-JXh5eG6EhxSGbJbs_3/view?usp=sharing"
+      },
+      {
+        id: 3,
+        icon: "🇮🇩",
+        group: "Special Event",
+        title: "Suku Bunga HUT RI ke-81",
+        previewUrl: "https://drive.google.com/file/d/1IYv3NVeB0d81mAuH4qFHC8wZSlBEyafU/preview",
+        viewUrl: "https://drive.google.com/file/d/1IYv3NVeB0d81mAuH4qFHC8wZSlBEyafU/view?usp=sharing"
+      },
+      {
+        id: 4,
+        icon: "👑",
+        group: "Segment Premiere",
+        title: "Suku Bunga Premiere (Agustus-September 2026)",
+        previewUrl: "https://drive.google.com/file/d/1fhzZAWG_D88WQ0ZGb7_DN43dBgaAMunq/preview",
+        viewUrl: "https://drive.google.com/file/d/1fhzZAWG_D88WQ0ZGb7_DN43dBgaAMunq/view?usp=sharing"
+      },
+      {
+        id: 5,
+        icon: "🔄",
+        group: "Take Over & Top Up",
+        title: "Suku Bunga Take Over dan Top Up",
+        previewUrl: "https://drive.google.com/file/d/1ryc2T4gN13tQxzVekprK4hjXJJZ5PMna/preview",
+        viewUrl: "https://drive.google.com/file/d/1ryc2T4gN13tQxzVekprK4hjXJJZ5PMna/view?usp=sharing"
+      },
+      {
+        id: 6,
+        icon: "🏛️",
+        group: "Special Asset",
+        title: "Suku Bunga KPR Lelang (Agustus-September 2026)",
+        previewUrl: "https://drive.google.com/file/d/1aKhXvib3uT3hLb1WjiIeaJo1FpsEt2WQ/preview",
+        viewUrl: "https://drive.google.com/file/d/1aKhXvib3uT3hLb1WjiIeaJo1FpsEt2WQ/view?usp=sharing"
+      },
+      {
+        id: 7,
+        icon: "💎",
+        group: "Private Banking",
+        title: "Suku Bunga Nasabah Private Wealth",
+        previewUrl: "https://drive.google.com/file/d/1Z7C1JPFraJXBEKOYBQRk2PMl0FNtPvLo/preview",
+        viewUrl: "https://drive.google.com/file/d/1Z7C1JPFraJXBEKOYBQRk2PMl0FNtPvLo/view?usp=sharing"
+      },
+      {
+        id: 8,
+        icon: "🚀",
+        group: "Tactical Campaign",
+        title: "Suku Bunga Counter Kompetitor & Boosting Pencairan",
+        previewUrl: "https://drive.google.com/file/d/19v_EQPxongXjeo7KwbUgovXcRGUfrLHx/preview",
+        viewUrl: "https://drive.google.com/file/d/19v_EQPxongXjeo7KwbUgovXcRGUfrLHx/view?usp=sharing"
+      },
+      {
+        id: 9,
+        icon: "📈",
+        group: "Long Tenor (PDF)",
+        title: "Suku Bunga Berjenjang 20 Tahun (Dokumen PDF)",
+        previewUrl: "https://drive.google.com/file/d/1Uq37LhQ0O7F9iauYWXhUbPgny8XyLaMk/preview",
+        viewUrl: "https://drive.google.com/file/d/1Uq37LhQ0O7F9iauYWXhUbPgny8XyLaMk/view?usp=sharing"
+      },
+      {
+        id: 10,
+        icon: "🛡️",
+        group: "Retensi Debitur",
+        title: "Suku Bunga Retensi",
+        previewUrl: "https://drive.google.com/file/d/1gNfBPOJmFxD1hMR6X8kKzOvKkPsDCT-e/preview",
+        viewUrl: "https://drive.google.com/file/d/1gNfBPOJmFxD1hMR6X8kKzOvKkPsDCT-e/view?usp=sharing"
+      },
+      {
+        id: 11,
+        icon: "🏢",
+        group: "Corporate Partner",
+        title: "Suku Bunga KPR/Multiguna Perusahaan Terpilih",
+        previewUrl: "https://drive.google.com/file/d/1Rcw2TEAawE2kN96vpP3Et0en4bkZiWPS/preview",
+        viewUrl: "https://drive.google.com/file/d/1Rcw2TEAawE2kN96vpP3Et0en4bkZiWPS/view?usp=sharing"
+      }
+    ];
+
+    let currentActiveId = 1;
+
+    // DOM ELEMENTS
+    const drawerList = document.getElementById('drawerList');
+    const quickTabsBar = document.getElementById('quickTabsBar');
+    const docIframe = document.getElementById('docIframe');
+    const frameLoader = document.getElementById('frameLoader');
+    const viewBadge = document.getElementById('viewBadge');
+    const viewGroupTag = document.getElementById('viewGroupTag');
+    const viewTitle = document.getElementById('viewTitle');
+    const btnDownload = document.getElementById('btnDownload');
+    const tocDrawer = document.getElementById('tocDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+
+    // RENDER NAVIGATION ELEMENTS
+    function renderNavigation() {
+      // 1. Render Quick Horizontal Tabs (1 - 11)
+      rateItems.forEach(item => {
+        const btn = document.createElement('button');
+        btn.className = `quick-tab-btn ${item.id === 1 ? 'active' : ''}`;
+        btn.id = `qtab-${item.id}`;
+        btn.innerHTML = `<span class="tab-badge">${item.id}</span> Poin ${item.id}`;
+        btn.onclick = () => loadDocument(item.id);
+        quickTabsBar.appendChild(btn);
+      });
+
+      // 2. Render Collapsible Drawer List
+      rateItems.forEach(item => {
+        const div = document.createElement('div');
+        div.className = `drawer-item ${item.id === 1 ? 'active' : ''}`;
+        div.id = `ditem-${item.id}`;
+        div.innerHTML = `
+          <div class="drawer-badge">${item.id}</div>
+          <div class="drawer-content">
+            <span class="drawer-group-badge">${item.icon} ${item.group}</span>
+            <div class="drawer-text">${item.title}</div>
+          </div>
+        `;
+        div.onclick = () => {
+          loadDocument(item.id);
+          closeDrawer();
+        };
+        drawerList.appendChild(div);
+      });
+    }
+
+    // LOAD DOCUMENT FUNCTION
+    function loadDocument(id) {
+      currentActiveId = id;
+      const item = rateItems.find(p => p.id === id);
+      if (!item) return;
+
+      // Update Navigation Active States
+      document.querySelectorAll('.quick-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.drawer-item').forEach(d => d.classList.remove('active'));
+
+      const activeTab = document.getElementById(`qtab-${id}`);
+      const activeDrawer = document.getElementById(`ditem-${id}`);
+      if (activeTab) {
+        activeTab.classList.add('active');
+        activeTab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+      if (activeDrawer) activeDrawer.classList.add('active');
+
+      // Update Header Text Info
+      viewBadge.textContent = `Poin ${item.id}`;
+      viewGroupTag.textContent = `${item.icon} ${item.group}`;
+      viewTitle.textContent = item.title;
+      btnDownload.href = item.viewUrl;
+
+      // Embed Google Drive Preview into Iframe
+      frameLoader.style.display = 'flex';
+      docIframe.src = item.previewUrl;
+
+      docIframe.onload = () => {
+        frameLoader.style.display = 'none';
+      };
+    }
+
+    // DRAWER CONTROLLER
+    function openDrawer() {
+      tocDrawer.classList.add('active');
+      drawerOverlay.classList.add('active');
+    }
+
+    function closeDrawer() {
+      tocDrawer.classList.remove('active');
+      drawerOverlay.classList.remove('active');
+    }
+
+    document.getElementById('btnOpenTOC').onclick = openDrawer;
+    document.getElementById('btnCloseTOC').onclick = closeDrawer;
+    drawerOverlay.onclick = closeDrawer;
+
+    // Keyboard ESC to Close Drawer
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    // INITIALIZATION
+    window.addEventListener('DOMContentLoaded', () => {
+      renderNavigation();
+      loadDocument(1); // Default memuat dokumen nomor 1
+    });
+  </script>
+</body>
+</html>
